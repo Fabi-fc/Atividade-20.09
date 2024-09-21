@@ -1,0 +1,124 @@
+Atividade 1
+<?php
+function cadastrarProdutos() {
+    $produtos = [];
+    for ($i = 0; $i < 5; $i++) {
+        $nome = readline("Digite o nome do produto: ");
+        $preco = floatval(readline("Digite o preço do produto: R$ "));
+        $produtos[] = ['nome' => $nome, 'preco' => $preco];
+    }
+    return $produtos;
+}
+
+function calcularPrecos($produtos) {
+    $abaixo50 = 0;
+    $entre50e100 = [];
+    $somaAcima100 = 0;
+    $contagemAcima100 = 0;
+
+    foreach ($produtos as $produto) {
+        if ($produto['preco'] < 50) {
+            $abaixo50++;
+        } elseif ($produto['preco'] >= 50 && $produto['preco'] <= 100) {
+            $entre50e100[] = $produto['nome'];
+        } elseif ($produto['preco'] > 100) {
+            $somaAcima100 += $produto['preco'];
+            $contagemAcima100++;
+        }
+    }
+
+    $mediaAcima100 = $contagemAcima100 > 0 ? $somaAcima100 / $contagemAcima100 : 0;
+
+    echo "Quantidade de produtos com preço inferior a R$50,00: $abaixo50\n";
+    echo "Produtos com preço entre R$50,00 e R$100,00: " . implode(", ", $entre50e100) . "\n";
+    echo "Média dos preços dos produtos com preço superior a R$100,00: R$ " . number_format($mediaAcima100, 2) . "\n";
+}
+
+function main() {
+    $produtos = cadastrarProdutos();
+    calcularPrecos($produtos);
+}
+
+main();
+?>
+
+Atividade 2
+
+<?php
+function cadastrarAlunos() {
+    $alunos = [];
+    for ($i = 0; $i < 10; $i++) {
+        $nome = readline("Digite o nome do aluno: ");
+        $nota = floatval(readline("Digite a nota do aluno: "));
+        $alunos[] = ['nome' => $nome, 'nota' => $nota];
+    }
+    return $alunos;
+}
+
+function calcularMediaEMaior($alunos) {
+    $totalNotas = 0;
+    $maiorAluno = $alunos[0];
+
+    foreach ($alunos as $aluno) {
+        $totalNotas += $aluno['nota'];
+        if ($aluno['nota'] > $maiorAluno['nota']) {
+            $maiorAluno = $aluno;
+        }
+    }
+
+    $media = $totalNotas / count($alunos);
+
+    echo "Média de notas da classe: " . number_format($media, 2) . "\n";
+    echo "Aluno com a maior nota: " . $maiorAluno['nome'] . " com nota " . number_format($maiorAluno['nota'], 2) . "\n";
+}
+
+function main() {
+    $alunos = cadastrarAlunos();
+    calcularMediaEMaior($alunos);
+}
+
+main();
+?>
+Atividade 3
+<?php
+function cadastrarNumeros() {
+    $numeros = [];
+    for ($i = 0; $i < 10; $i++) {
+        $numero = intval(readline("Digite um número: "));
+        $numeros[] = $numero;
+    }
+    return $numeros;
+}
+
+function analisarNumeros($numeros) {
+    $negativos = 0;
+    $positivos = 0;
+    $pares = 0;
+    $impares = 0;
+
+    foreach ($numeros as $numero) {
+        if ($numero < 0) {
+            $negativos++;
+        } elseif ($numero > 0) {
+            $positivos++;
+        }
+        if ($numero % 2 == 0) {
+            $pares++;
+        } else {
+            $impares++;
+        }
+    }
+
+    echo "Quantidade de negativos: $negativos\n";
+    echo "Quantidade de positivos: $positivos\n";
+    echo "Quantidade de pares: $pares\n";
+    echo "Quantidade de ímpares: $impares\n";
+}
+
+function main() {
+    $numeros = cadastrarNumeros();
+    analisarNumeros($numeros);
+}
+
+main();
+?>
